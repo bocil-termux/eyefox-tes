@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Downloader</title>
+<style>
+  /* Reset & general */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+    color:#fff;
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+
+  /* Tombol Back */
+  .back-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+  }
+  .back-btn a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(139,69,255,0.3);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: all .3s ease;
+  }
+  .back-btn a:hover {
+    background: rgba(139,69,255,0.6);
+  }
+
+  /* Teks penjelasan */
+  h2 {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ddd;
+  }
+
+  /* Container input link */
+  .container {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background: #1e1e1e;
+    color: #fff;
+  }
+
+  /* Tombol download */
+  .download-btn {
+    width: 100%;
+    max-width: 400px;
+    padding: 14px;
+    background-color: #8b45ff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: all .3s ease;
+  }
+  .download-btn:hover {
+    background-color: #a066ff;
+  }
+
+  /* Container hasil download/preview */
+  #result {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(26,26,46,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    display: none; /* tidak tampil awalnya */
+  }
+
+  /* Overlay portrait */
+  #orientation-lock {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    font-size: 18px;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Overlay Lock -->
+<div id="orientation-lock">Rotate your device to portrait mode 📱</div>
+
+<!-- Tombol Back -->
+<div class="back-btn"><a href="index.html">«</a></div>
+
+<!-- Teks penjelasan -->
+<h2>Paste the TikTok video link below and download it in the best resolution available.</h2>
+
+<!-- Container Paste Link -->
+<div class="container">
+  <input type="text" class="input-box" id="tiktokLink" placeholder="Enter TikTok video URL...">
+</div>
+
+<!-- Tombol Download -->
+<div class="container">
+  <button class="download-btn" onclick="downloadTikTok()">Download Video</button>
+</div>
+
+<!-- Container hasil download / preview -->
+<div id="result"></div>
+
+<script src="tiktok.js"></script>
+</body>
+</html>

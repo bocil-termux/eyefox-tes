@@ -1,0 +1,100 @@
+/* Reset & general */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:20px;
+  box-sizing:border-box;
+}
+
+/* Tombol Back */
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+}
+.back-btn a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(139,69,255,0.3);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: all .3s ease;
+}
+.back-btn a:hover {
+  background: rgba(139,69,255,0.6);
+}
+
+/* Teks penjelasan */
+h2 {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ddd;
+}
+
+/* Container input link */
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* Tombol download */
+.download-btn {
+  width: 100%;
+  max-width: 400px;
+  padding: 14px;
+  background-color: #8b45ff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+.download-btn:hover {
+  background-color: #a066ff;
+}
+
+/* Preview Video */
+.preview {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(26,26,46,0.95);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 10px;
+  backdrop-filter: blur(5px);
+}
+.preview video {
+  width: 100%;
+  border-radius: 8px;
+}

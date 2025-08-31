@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FAQ - Downloader Video Socmed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <style>
+  /* Reset & general */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+    color:#fff;
+    min-height:100vh;
+  }
+
+  /* Lock: kalau landscape -> halaman kosong */
+  @media screen and (orientation: landscape) {
+    body {
+      display: none;
+    }
+  }
+
+  /* Tombol Back */
+  .back-btn {
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:1000;
+  }
+  .back-btn a {
+    display:inline-block;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:8px;
+    background: rgba(139,69,255,0.3);
+    color:#fff;
+    font-size:1.5rem;
+    font-weight:bold;
+    transition: all .3s ease;
+  }
+  .back-btn a:hover {
+    background: rgba(139,69,255,0.6);
+  }
+
+  /* Header */
+  header {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background: rgba(26,26,46,0.9);
+    border-bottom:1px solid rgba(139,69,255,0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Slideshow */
+  .slideshow-container {
+    max-width: 100%;
+    margin: 20px auto;
+    text-align: center;
+    padding: 20px;
+  }
+  .slides { 
+    display:none; 
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  .slides h2 {
+    font-size:1.6rem;
+    color:#8b45ff;
+    margin-bottom:10px;
+  }
+  .slides p {
+    font-size:1rem;
+    line-height:1.5;
+    color:#ddd;
+  }
+
+  /* FAQ Content */
+  .faq-content {
+    max-width:900px;
+    margin: 20px auto;
+    padding:25px;
+    background: rgba(26,26,46,0.95);
+    border:1px solid rgba(139,69,255,0.3);
+    border-radius:12px;
+    backdrop-filter: blur(5px);
+  }
+  .faq-content h1 {
+    color:#8b45ff;
+    font-size:1.9rem;
+    margin-bottom:20px;
+  }
+  .faq-content h2 {
+    color:#b8b8ff;
+    font-size:1.5rem;
+    margin-top:25px;
+    margin-bottom:12px;
+  }
+  .faq-content p {
+    color:#ddd;
+    line-height:1.8;
+    margin-bottom:12px;
+  }
+
+  /* Animasi fade slideshow */
+  @keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Tombol Back -->
+  <div class="back-btn">
+    <a href="index.html">«</a>
+  </div>
+
+  <!-- Header kosong -->
+  <header></header>
+
+  <!-- Slideshow -->
+  <section class="slideshow-container">
+    <div class="slides fade">
+      <h2>Why use this app?</h2>
+      <p>Download videos from multiple platforms quickly and safely. It saves you time by eliminating the need for multiple tools and avoids unnecessary ads and pop-ups. Everything is centralized in one user-friendly interface for ease of access.</p>
+    </div>
+    <div class="slides fade">
+      <h2>Supported Platforms</h2>
+      <p>You can grab content from TikTok, YouTube, Instagram, and even random MP4 links. The app ensures compatibility across different formats and resolutions, making it easier to save high-quality videos without losing details.</p>
+    </div>
+    <div class="slides fade">
+      <h2>Our Goal</h2>
+      <p>Provide a clean, simple, and fast way to save videos without watermark. Our mission is to create a reliable tool that lets you preserve and enjoy your favorite content offline while maintaining its original quality and integrity.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Content -->
+  <main class="faq-content">
+    <h1>About This Application</h1>
+    <p>This web application was created to simplify the process of downloading videos from various social media platforms. Instead of struggling with limited tools, ads, or complicated methods, users can simply paste a link and retrieve their desired content. The app emphasizes convenience, speed, and accessibility for all types of users, from beginners to advanced content creators.</p>
+
+    <h2>How to Use</h2>
+    <p>
+      1. Choose the platform you want to download from. Each platform is optimized for seamless video retrieval.<br>
+      2. Paste the video link into the input box provided, making sure the link is valid.<br>
+      3. Press the download button and wait for the process. The app handles the technical details behind the scenes.<br>
+      4. Once completed, your video will be ready to save locally. You can then watch offline, share with friends, or include in your personal projects.
+    </p>
+
+    <h2>Purpose of This App</h2>
+    <p>The purpose of this downloader is not only to save videos but also to preserve content for offline use. Whether it's educational, entertaining, or informative material, our goal is to give you easy access anywhere, anytime. By making content more accessible offline, it supports learning, creative projects, and personal archiving without relying on continuous internet connectivity.</p>
+
+    <h2>Important Notes</h2>
+    <p>
+      Please use this tool responsibly. Download content only when it is legal and ethical to do so. Respect copyrights and creators' rights. This web is intended to help with accessibility and learning, not piracy. Misuse of downloaded content may result in legal consequences, so always make sure you have permission or the right to use the material for personal purposes.
+    </p>
+  </main>
+
+  <script>
+    // Back button behavior: sembunyi kalau scroll > 50px
+    window.addEventListener("scroll", function(){
+      const backBtn = document.querySelector(".back-btn");
+      backBtn.style.display = window.scrollY > 50 ? "none" : "block";
+    });
+
+    // Slideshow logic
+    let slideIndex = 0;
+    function showSlides() {
+      let slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1 }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 4000); // 4 detik
+    }
+    showSlides();
+  </script>
+</body>
+</html>

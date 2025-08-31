@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Download YouTube Video - Tiyarmybe</title>
+  <link rel="stylesheet" href="yt.css">
+</head>
+<body>
+
+  <!-- Back Button (pojok kiri atas) -->
+  <div class="back-btn-container">
+    <button onclick="goHome()" aria-label="Back">«</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <h2 class="title">YouTube Downloader</h2>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <h1>Download YouTube Videos</h1>
+    <p>Paste your YouTube video link below and click "Download" to save it to your device.</p>
+
+    <div class="input-group">
+      <input type="text" id="ytUrl" placeholder="Paste YouTube link here">
+
+      <select id="resolution">
+        <option value="360">360p</option>
+        <option value="480">480p</option>
+        <option value="720">720p</option>
+        <option value="1080">1080p</option>
+      </select>
+
+      <button id="downloadBtn">Download</button>
+    </div>
+
+    <p id="output" class="status-text"></p>
+
+    <!-- Container preview video -->
+    <div id="result" class="yt-preview-container"></div>
+
+    <!-- Penjelasan fungsi dan fitur lengkap -->
+    <section class="instructions">
+      <h2>How to Use & Features</h2>
+      <p>This YouTube Downloader by Tiyarmybe allows you to quickly download YouTube videos directly from your browser without installing additional software. Here’s how it works and what features are available:</p>
+      <ol>
+        <li><strong>Paste Video Link:</strong> Copy the URL of the YouTube video you want to download and paste it into the input box above.</li>
+        <li><strong>Select Resolution:</strong> Choose the video resolution before downloading.</li>
+        <li><strong>Click Download:</strong> Press the "Download" button to process the video. The system will simulate or prepare the download.</li>
+        <li><strong>Status Updates:</strong> You will see messages indicating the processing status. Errors (like invalid links) will appear in red.</li>
+        <li><strong>Save Video:</strong> Once processing is complete, the video will be ready to save to your device.</li>
+      </ol>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Download Video YouTube by Tiyarmybe</p>
+  </footer>
+
+  <!-- Import yt.js untuk logika download -->
+  <script src="yt.js"></script>
+  <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+    document.getElementById('downloadBtn').addEventListener('click', getVideo);
+  </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>all Video Downloader</title>
+  <style>
+    /* Reset & general */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+      color:#fff;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:20px;
+      box-sizing:border-box;
+    }
+
+    /* Tombol Back */
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+    }
+    .back-btn a {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(139,69,255,0.3);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      transition: all .3s ease;
+    }
+    .back-btn a:hover { background: rgba(139,69,255,0.6); }
+
+    /* Teks penjelasan */
+    h2 {
+      margin-top: 60px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #ddd;
+    }
+
+    /* Container input link */
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .input-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    /* Tombol download */
+    .download-btn {
+      width: 100%;
+      max-width: 400px;
+      padding: 14px;
+      background-color: #8b45ff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+    .download-btn:hover { background-color: #a066ff; }
+
+    /* Preview Video */
+    .preview {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(26,26,46,0.95);
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .preview video { width: 100%; border-radius: 8px; }
+    .preview img { width: 100%; border-radius: 8px; }
+    .links { margin-top: 10px; display:flex; flex-direction:column; gap:10px; }
+
+    /* Guide */
+    .guide {
+      max-width: 700px;
+      margin-top: 25px;
+      text-align: left;
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.6;
+      background: rgba(0,0,0,0.2);
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .guide h3 { color:#e6e6e6; margin-bottom:8px; }
+    .small { font-size: 12px; color:#aaa; }
+    .tag { display:inline-block; font-size:12px; padding:4px 8px; border-radius:999px; background:#2a2a4a; margin:0 6px 6px 0; }
+  </style>
+</head>
+<body>
+  <!-- Back -->
+  <div class="back-btn"><a href="index.html">«</a></div>
+
+  <h2>Universal Video Downloader</h2>
+
+  <div class="container">
+    <form id="downloadForm">
+      <input type="text" id="url" class="input-box" placeholder="Paste any video URL (Instagram, TikTok, Facebook, YouTube, MediaFire, Videy, ...)" required />
+      <button type="submit" class="download-btn">Download</button>
+    </form>
+  </div>
+
+  <div id="result" class="preview">
+    <div id="status">Paste a link and hit Download.</div>
+    <div id="media"></div>
+    <div id="buttons" class="links"></div>
+  </div>
+
+  <div class="guide">
+    <h3>How to Use</h3>
+    <ol>
+      <li>Copy a video link from any platform (Instagram, TikTok, Facebook, YouTube, MediaFire, Videy, etc.).</li>
+      <li>Paste the link into the box above and click <b>Download</b>.</li>
+      <li>
+        <b>Supported natively via your server:</b>
+        <span class="tag">Instagram</span>
+        <span class="tag">TikTok</span>
+        <span class="tag">Facebook</span>
+        (Direct preview + downloadable links)
+      </li>
+      <li>
+        <b>Other platforms:</b> this page provides safe hand-off links to helper downloaders with your URL pre-filled (until your backend adds native endpoints).
+      </li>
+      <li>Click a download button to save the file to your device.</li>
+    </ol>
+    <p class="small">
+      Tip: For TikTok HD, we try your <code>/tiktok</code> endpoint first (no watermark). If it fails, we fall back to the generic scraper.
+    </p>
+  </div>
+
+  <script>
+    const form = document.getElementById('downloadForm');
+    const statusEl = document.getElementById('status');
+    const mediaEl = document.getElementById('media');
+    const buttonsEl = document.getElementById('buttons');
+
+    const isInstagram = (u) => /(instagram\.com|instagr\.am)/i.test(u);
+    const isTikTok    = (u) => /tiktok\.com|vt\.tiktok\.com/i.test(u);
+    const isFacebook  = (u) => /facebook\.com|fb\.watch/i.test(u);
+    const isYouTube   = (u) => /youtube\.com|youtu\.be/i.test(u);
+    const isMediaFire = (u) => /mediafire\.com/i.test(u);
+    const isVidey     = (u) => /videy\.?co|v\.vc/i.test(u); // adjust patterns as needed
+
+    // Fallback helpers (no server changes needed). Opens prefilled tools in new tab.
+    function helperLinks(url) {
+      const enc = encodeURIComponent(url);
+      const items = [];
+
+      if (isYouTube(url)) {
+        items.push({ label: 'Open 3rd-party YT downloader (prefilled)', href: `https://y2mate.com/youtube/${enc}` });
+        items.push({ label: 'Open alternative YT tool', href: `https://ssyoutube.com/en#url=${enc}` });
+      } else if (isMediaFire(url)) {
+        items.push({ label: 'Open MediaFire page', href: url });
+        items.push({ label: 'Open MediaFire helper', href: `https://www.neatdownloadmanager.com/?url=${enc}` });
+      } else if (isVidey(url)) {
+        items.push({ label: 'Open Videy page', href: url });
+        items.push({ label: 'Open generic downloader', href: `https://9xbuddy.org/process?url=${enc}` });
+      } else {
+        // generic helpers
+        items.push({ label: 'Open generic downloader A', href: `https://9xbuddy.org/process?url=${enc}` });
+        items.push({ label: 'Open generic downloader B', href: `https://snapsave.app/?url=${enc}` });
+      }
+      return items;
+    }
+
+    async function callServerScrape(platform, url) {
+      const res = await fetch('/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ platform, url })
+      });
+      return res.json();
+    }
+
+    async function tryTikTokHD(url) {
+      // prefer your dedicated /tiktok route for HD/no-wm
+      const q = new URLSearchParams({ url }).toString();
+      const res = await fetch(`/tiktok?${q}`);
+      if (!res.ok) throw new Error('HD route failed');
+      return res.json();
+    }
+
+    function clearUI() {
+      statusEl.textContent = '';
+      mediaEl.innerHTML = '';
+      buttonsEl.innerHTML = '';
+    }
+
+    function showError(msg) {
+      mediaEl.innerHTML = '';
+      buttonsEl.innerHTML = '';
+      statusEl.innerHTML = `<span style="color:#ff8a8a">Error: ${msg}</span>`;
+    }
+
+    function renderPlayable(urls) {
+      clearUI();
+      const arr = Array.isArray(urls) ? urls : [urls];
+      const blocks = arr.map(link => {
+        const isVideo = /\.mp4(\?|$)/i.test(link) || /video|hdplay|nowm/i.test(link);
+        return `
+          ${isVideo ? `<video controls src="${link}"></video>` : `<img src="${link}" alt="media">`}
+          <div class="links">
+            <a class="download-btn" href="${link}" target="_blank" download>Download</a>
+          </div>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,.1);margin:14px 0;">
+        `;
+      }).join('');
+      mediaEl.innerHTML = blocks;
+      statusEl.textContent = 'Ready.';
+    }
+
+    function renderHelpers(url) {
+      const items = helperLinks(url);
+      buttonsEl.innerHTML = items.map(x => `<a class="download-btn" href="${x.href}" target="_blank" rel="noopener">${x.label}</a>`).join('');
+    }
+
+    async function resolveByPlatform(url) {
+      // Native (server-backed)
+      if (isInstagram(url)) {
+        const data = await callServerScrape('instagram', url);
+        if (!data?.status) throw (data?.error || 'Failed to scrape Instagram');
+        return { playable: data.download, helpers: [] };
+      }
+      if (isTikTok(url)) {
+        // Try HD endpoint first
+        try {
+          const hd = await tryTikTokHD(url);
+          const best = hd?.video_hd || hd?.video_nowm || '';
+          if (best) return { playable: best, helpers: [] };
+        } catch(_) {}
+        // Fallback to generic scraper
+        const data = await callServerScrape('tiktok', url);
+        if (!data?.status) throw (data?.error || 'Failed to scrape TikTok');
+        return { playable: data.download, helpers: [] };
+      }
+      if (isFacebook(url)) {
+        const data = await callServerScrape('facebook', url);
+        if (!data?.status) throw (data?.error || 'Failed to scrape Facebook');
+        return { playable: data.download, helpers: [] };
+      }
+
+      // Others → provide helper links (until backend supports them)
+      return { playable: null, helpers: helperLinks(url) };
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('url').value.trim();
+      statusEl.textContent = 'Processing...';
+      mediaEl.innerHTML = '';
+      buttonsEl.innerHTML = '';
+
+      if (!/^https?:\/\//i.test(url)) {
+        showError('Please paste a valid URL (must start with http/https).');
+        return;
+      }
+
+      try {
+        const { playable, helpers } = await resolveByPlatform(url);
+
+        if (playable) {
+          renderPlayable(playable);
+        } else {
+          clearUI();
+          statusEl.innerHTML = `This platform isn’t supported by your server yet.<br><span class="small">Use one of the helper links below while you add native support on the backend.</span>`;
+          renderHelpers(url);
+        }
+      } catch (err) {
+        console.error(err);
+        showError(err?.message || err);
+      }
+    });
+  </script>
+</body>
+</html>
